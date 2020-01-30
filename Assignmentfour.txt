@@ -1,0 +1,65 @@
+## filtering duplicate data 
+
+create table assignmentfour (
+employee_id int,
+name varchar (100) not null);
+
+insert into assignmentfour(employee_id, name)
+values
+(1,'Ganesh'),
+(1, 'Ganesh'),
+(2,'kumar'),
+(3,'don'),
+(4,'falthus'),
+(3, 'don'),
+(5,'sanjay'),
+(6,'naveen'),
+(5,'sanjay'),
+(7,'gulshan'),
+(8,'husain'),
+(9,'chary'),
+(10,'pavan'),
+(9,'chary'),
+(10,'pavan'),
+(8,'husain'),
+(7,'gulshan'),
+(6,'naveen'),
+(11,'siva'),
+(11,'siva'),
+(2,'kumar'),
+(4,'falthus');
+
+select * from assignmentfour
+
+select 
+		employee_id,
+		name
+from
+		assignmentfour
+group by 
+		employee_id,
+		name
+
+
+with cte as (
+select 
+		employee_id,
+		name,
+		row_number() over (
+		partition by 
+		name
+		order by
+		employee_id,
+		name) row_num
+from
+		assignmentfour
+)
+delete from cte
+where row_num  > 1;
+
+
+select *  from assignmentfour 
+order by 
+employee_id;
+
+select * from cte
